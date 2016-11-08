@@ -4,9 +4,8 @@
 
 
 InitialDir = /home/jdb12/work/pythia
-Executable = /home/jdb12/work/muonAna/bin/prod
-Arguments  = /home/jdb12/work/muonAna/bin/config/Tasks/SameEventInvMassHistoMaker.xml --jobIndex=$(Process) --R:active=Run14_AuAu_200_Mtd
-
+Executable = /home/jdb12/work/pythia/run.sh
+Arguments  = $(Process)
 GetEnv     = True
 
-Queue 299
+Queue 100
