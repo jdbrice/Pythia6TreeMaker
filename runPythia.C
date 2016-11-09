@@ -90,7 +90,7 @@ void addTrack( TMCParticle * plc, int iTrack ){
 
 }
 
-void runPythia( string out_file = "test.root", int n_events = 10000, int seed = 2 ) {
+void runPythia( string out_file = "test.root", int n_events = 10000, int seed = 2, int seedStart = 0 ) {
 
 
 	gSystem->Load("libPhysics");
@@ -100,7 +100,7 @@ void runPythia( string out_file = "test.root", int n_events = 10000, int seed = 
 
 
 
-	setupPythia( seed + 1201 );
+	setupPythia( seed + seedStart );
 
 	TFile * fout = new TFile( out_file.c_str(), "RECREATE" );
 	makeTree();

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<job simulateSubmission="false" nProcesses="10" >
+	
+	<command>
+		starver pro
+		root -b -q -l 'runPythia.C( "'rcf_out_${JOBINDEX}.root'", 10000, '${JOBINDEX}', 2500 )' &gt;&amp; log_${JOBID}.log
+	</command>
+
+	<stdout URL="file:/star/data03/pwg/jdb/scratch/log/$JOBID.out" />
+	<stderr URL="file:/star/data03/pwg/jdb/scratch/log/$JOBID.err" />
+
+	<output fromScratch="*.log" toURL="file:/star/data03/pwg/jdb/scratch/"/>
+	<output fromScratch="*.root" toURL="file:/star/data03/pwg/jdb/scratch/"/>
+
+	<SandBox>
+ 		<Package>
+ 			<File>file:./runPythia.C</File>
+ 		</Package> 
+ 	</SandBox>
+
+	<Generator> 
+ 		<Location>/star/data03/pwg/jdb/scratch/gen</Location> 
+ 	</Generator> 
+</job>
