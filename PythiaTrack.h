@@ -12,8 +12,8 @@ public:
 
 	Int_t mId;
 	Float_t mEnergy;
-	Float_t mKF;
-	Float_t mKS;
+	Int_t mKF;
+	Int_t mKS;
 	Float_t mLifetime;
 	Float_t mMass;
 	Int_t mParent;
@@ -25,6 +25,7 @@ public:
 	Float_t mVy;
 	Float_t mVz;
 
+	ClassDef( PythiaTrack, 2 )
 };
 
 #endif

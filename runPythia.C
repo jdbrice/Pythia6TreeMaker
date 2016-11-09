@@ -24,6 +24,7 @@
 #include "TPythia6.h"
 #include "TMCParticle.h"
 
+
 TPythia6 *pythia6 = nullptr;
 TTree * tree = nullptr;
 TClonesArray *pyTracks = nullptr;
@@ -89,7 +90,8 @@ void addTrack( TMCParticle * plc, int iTrack ){
 
 }
 
-void runPythia( string out_file = "out.root", int n_events = 1000, int seed = 0 ) {
+void runPythia( string out_file = "test.root", int n_events = 10000, int seed = 2 ) {
+
 
 	gSystem->Load("libPhysics");
 	gSystem->Load("libEG.so");
@@ -97,7 +99,8 @@ void runPythia( string out_file = "out.root", int n_events = 1000, int seed = 0 
 	gSystem->Load( "PythiaTrack_h.so" );
 
 
-	setupPythia( seed );
+
+	setupPythia( seed + 1201 );
 
 	TFile * fout = new TFile( out_file.c_str(), "RECREATE" );
 	makeTree();
@@ -112,12 +115,56 @@ void runPythia( string out_file = "out.root", int n_events = 1000, int seed = 0 
 		TObjArray *particles = pythia6->GetListOfParticles();
 
 		pyTracks->Clear();
-		
+		// vector<int> pos, neg;
+		bool hasMuon = false;
 		int nTracks = particles->GetEntries();
 		for ( int iTrack = 0; iTrack < nTracks; iTrack++ ){
-			addTrack( (TMCParticle*)particles->At( iTrack ), iTrack );
+			TMCParticle * plc = (TMCParticle*)particles->At( iTrack );
+			addTrack( plc, iTrack );
+			if ( abs( plc->GetKF() ) == 13 ) {
+				hasMuon = true;
+				// cout << "Muon with parent = " << plc->GetParent() << endl;
+			}
+
+			// if ( plc->GetKF() == 13 ) neg.push_back( iTrack );
+			// if ( plc->GetKF() == -13 ) pos.push_back( iTrack );
+
 		}
-		tree->Fill();
+
+		// for ( int iPos = 0; iPos < pos.size(); iPos++ ){
+		// 	for ( int iNeg = 0; iNeg < neg.size(); iNeg++ ){
+		// 		TMCParticle * pPos = (TMCParticle*)particles->At( pos[iPos] );
+		// 		TMCParticle * pNeg = (TMCParticle*)particles->At( neg[iNeg] );
+
+		// 		if ( pPos->GetParent() == pNeg->GetParent() && pNeg->GetParent() > 0 ){
+
+		// 			cout << "parent = " << pPos->GetParent() << endl ;
+		// 			TMCParticle * parent = (TMCParticle*)particles->At( pNeg->GetParent() - 1 );
+		// 			// if ( parent->GetKF() == 221 ) continue;
+
+		// 			cout << "parent kf = " << parent->GetKF() << endl;
+		// 			cout << "children = " << parent->GetFirstChild() << " -> " << parent->GetLastChild() << endl;
+		// 			cout << "pos = " << pos[iPos] << ", neg = " << neg[iNeg] << endl;
+		// 			cout << "pos kf = " << pPos->GetKF() << endl;
+
+		// 			TLorentzVector lv1, lv2, lv, lvp;
+		// 			TVector3 mom1( pPos->GetPx(), pPos->GetPy(), pPos->GetPz() );
+		// 			TVector3 mom2( pNeg->GetPx(), pNeg->GetPy(), pNeg->GetPz() );
+
+		// 			lv1.SetPtEtaPhiM( mom1.Perp(), mom1.Eta(), mom1.Phi(), pPos->GetMass() );
+		// 			lv2.SetPtEtaPhiM( mom2.Perp(), mom2.Eta(), mom2.Phi(), pNeg->GetMass() );
+		// 			lv = lv1 + lv2;
+
+		// 			cout << "parent.mMass = " << parent->GetMass() << " vs. " << lv.M() << endl;
+
+		// 		}
+				
+		// 	}
+		// }
+
+
+		if ( hasMuon )
+			tree->Fill();
 	}
 
 
