@@ -15,6 +15,7 @@
 	<SandBox>
  		<Package>
  			<File>file:./runPythia.C</File>
+ 			<File>file:./PythiaTrack_h.so</File>
  		</Package> 
  	</SandBox>
 
