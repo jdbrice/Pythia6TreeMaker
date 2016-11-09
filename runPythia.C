@@ -25,9 +25,9 @@
 #include "TMCParticle.h"
 
 
-TPythia6 *pythia6 = nullptr;
-TTree * tree = nullptr;
-TClonesArray *pyTracks = nullptr;
+TPythia6 *pythia6 = NULL;
+TTree * tree = NULL;
+TClonesArray *pyTracks = NULL;
 
 void setupPythia( int iseed = 0 ){
 	 pythia6 = new TPythia6();
