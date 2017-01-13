@@ -33,7 +33,7 @@ LD= g++
 CXXSOURCES =  pythia_ccbar.cpp
 CXXOBJECTS = $(CXXSOURCES:.cpp=.o)
 CXXFLAGS =  $(INCLUDEDIRS)
-CXX = g++ -g -m64 -O3
+CXX = g++ -g -m64 -O3 -std=c++11
 
 LDFLAGS = $(LIBDIRS) $(LIBS)
 
