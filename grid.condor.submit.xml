@@ -2,17 +2,11 @@
 # 				Pythia Event Generator
 ######################################################################
 
-Requirements = ( Machine == "macfrank.rice.edu" )
+# Requirements = ( Machine == "macfrank.rice.edu" )
 
 GetEnv     = True
 InitialDir = /home/jdb12/work/pythia/
 Executable = /home/jdb12/work/pythia/run.sh
-# START_AT = 100 
-# jobIndex = $$([ $(Process) + $(START_AT) ])
 Arguments  = $(Process)
 
-
-# Output = /data/star1/jdb12/dilepton/Run15_PP_200_Mtd/Pythia/pythia_log_$(Process).log
-# Error = /data/star1/jdb12/dilepton/Run15_PP_200_Mtd/Pythia/pythia_log_$(Process).err
-
-Queue 1200
+Queue 4000

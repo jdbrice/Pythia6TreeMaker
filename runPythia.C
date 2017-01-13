@@ -33,27 +33,43 @@ void setupPythia( int iseed = 0 ){
 	 pythia6 = new TPythia6();
 
 	 // high pt QCD processes
-	 pythia6->SetMSEL(1);
+	 const int MSEL_MINBIAS = 1;
+	 const int MSEL_CCBAR_TRIG = 4;
+	 pythia6->SetMSEL(MSEL_MINBIAS);
 
 	 // STAR Tune with modified primordial <kt>
-    pythia6->SetMSTP(51,7);
-    pythia6->SetMSTP(82,4);
-    pythia6->SetPARP(82,2.0);
-    pythia6->SetPARP(83,0.5);
-    pythia6->SetPARP(84,0.4);
-    pythia6->SetPARP(85,0.9);
-    pythia6->SetPARP(86,0.95);
-    pythia6->SetPARP(89,1800);
-    pythia6->SetPARP(90,0.25);
-    pythia6->SetPARP(91,0.3);// primordial <kt> distribution width (based on gaussian)
-    pythia6->SetPARP(67,1.0);//mstp32*4 high pT tuned parameter
+    // pythia6->SetMSTP(51,7);
+    // pythia6->SetMSTP(82,4);
+    // pythia6->SetPARP(82,2.0);
+    // pythia6->SetPARP(83,0.5);
+    // pythia6->SetPARP(84,0.4);
+    // pythia6->SetPARP(85,0.9);
+    // pythia6->SetPARP(86,0.95);
+    // pythia6->SetPARP(89,1800);
+    // pythia6->SetPARP(90,0.25);
+    // pythia6->SetPARP(91,0.3);// primordial <kt> distribution width (based on gaussian)
+    // pythia6->SetPARP(67,1.0);//mstp32*4 high pT tuned parameter
+
+	// Tune from JOEY BUTTERWORTH
+	pythia->SetPARP(91,1.0); //<kT>
+	pythia->SetPARP(67,1.0);  //mstp*4
+
+	// TURN ON relavent ccbar decays
+	for(int i=684; i<=735; i++) pythia->SetMDME(i,1,0); //D+
+	for(int i=755; i<=807; i++) pythia->SetMDME(i,1,0); //D0
+	pythia->SetMDME(818,1,0); //Ds
+	for(int i=824; i<=850; i++) pythia->SetMDME(i,1,0); //Ds
+	for(int i=857; i<=862; i++) pythia->SetMDME(i,1,0); //eta_c,J/psi,chi_2c
+	for(int i=1097; i<=1165; i++) pythia->SetMDME(i,1,0); //Lc
+
 
     TRandom3 rndm;
-    rndm.SetSeed( 0 );
-    int rSeed = rndm.Integer( 100000000 );
+    rndm.SetSeed( iseed );
+    // int rSeed = rndm.Integer( 100000000 );
     pythia6->SetMRPY(1, iseed); 
 	pythia6->Initialize("CMS","p","p",200);
 
+	pythia->Pylist(12);
 	pythia6->Pystat(1);
 	pythia6->Pystat(4);
 	pythia6->Pystat(5);

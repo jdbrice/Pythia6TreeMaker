@@ -4,3 +4,10 @@
 *.so
 *.d
 *.pcm
+*.o 
+
+
+/joey/
+GENERATOR
+output
+log
