@@ -9,4 +9,4 @@ InitialDir = /home/jdb12/work/pythia/
 Executable = /home/jdb12/work/pythia/run.sh
 Arguments  = $(Process)
 
-Queue 4000
+Queue 5000

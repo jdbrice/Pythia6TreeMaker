@@ -26,11 +26,11 @@ INCLUDEDIRS = \
 LIBDIRS = \
 	$(shell root-config --libs)
 
-LIBS = -lEGPythia6 -lEG
+LIBS = -lEGPythia6 -lEG 
 	 
 LD= g++
 
-CXXSOURCES =  pythia_ccbar.cpp
+CXXSOURCES =  PythiaTrack.cpp pythia_filter.cpp
 CXXOBJECTS = $(CXXSOURCES:.cpp=.o)
 CXXFLAGS =  $(INCLUDEDIRS)
 CXX = g++ -g -m64 -O3 -std=c++11
@@ -38,7 +38,11 @@ CXX = g++ -g -m64 -O3 -std=c++11
 LDFLAGS = $(LIBDIRS) $(LIBS)
 
 
-all:	$(PROGRAM)
+
+all:	PythiaTrackCPP $(PROGRAM)
+
+PythiaTrackCPP: PythiaTrack.h
+	rootcling -f PythiaTrack.cpp PythiaTrack.h+
 
 $(PROGRAM): $(CXXOBJECTS)
 	$(CXX)  -o $@ $(CXXOBJECTS) $(LDFLAGS) 
